@@ -1,40 +1,35 @@
-# 🛡️ AegisGuard Personal IDS/IPS System
+# 🛡️ Hệ Thống AegisGuard Personal IDS/IPS
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react&logoColor=black)](https://react.dev)
 [![MITRE ATT&CK](https://img.shields.io/badge/MITRE-ATT%26CK%20Mapped-red?style=flat)](https://attack.mitre.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Giấy phép: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**AegisGuard** is a lightweight, cross-platform personal **Network Intrusion Detection System (IDS) & Intrusion Prevention System (IPS)** with a real-time glassmorphic security dashboard. Built specifically for local machines (Windows, Linux, macOS), it offers real-time packet inspection, customizable YAML detection rules, threat intelligence lookup, and active IP blocklists.
-
----
-
-## 🌟 Key Features
-
-- **⚡ Dual-Engine Ingestion**: 
-  - **Engine A (Zero-Driver)**: Socket & Web Connection Inspector using `psutil` (requires zero drivers, runs seamlessly for non-admin users).
-  - **Engine B (Kernel Sniffer)**: Deep packet capture using `Scapy` + `Npcap/libpcap` for raw frame decodes and deep payload analysis.
-- **📏 Flexible Rule Engine**: Define detection policies in human-readable YAML with sliding-window threshold evaluation (Port Scans, SSH/RDP Brute Force, ICMP Floods, Suspicious Ports, DNS Anomalies).
-- **📥 Emerging Threats (ET Open) Online Store**: Direct category streaming from official `rules.emergingthreats.net` repository (50,000+ rules available: Reconnaissance, DoS, CVE Exploits, Web Shells, Malware).
-- **📝 Multi-Tier Persistence & SIEM Logging**:
-  - **SQLite Database (`ids_storage.db`)**: Ultra-fast local store for real-time Dashboard queries.
-  - **Suricata EVE JSON (`logs/eve.json`)**: Industry-standard EVE JSON format for direct ingestion into **Wazuh, Splunk, Filebeat, ELK**.
-  - **Snort Fast Log (`logs/fast.log`)**: Human-readable one-line alerts for instant Notepad or terminal inspection.
-- **🎨 Glassmorphic React Dashboard**: Pre-built static bundle served directly by FastAPI. Zero Node.js setup required for end-users!
-- **🌐 Bilingual UI (English & Tiếng Việt)**: Instant one-click language toggle between English and Vietnamese with persisted local settings.
-- **🌐 Threat Intelligence Integration**: Integrated IP reputation checking (AbuseIPDB/Feodo indicators) for real-time risk scoring.
-- **🚫 Active IPS Blocking**: One-click manual or rule-automated IP blocking in local firewall tables (`netsh advfirewall`).
-- **🛡️ Mapped to MITRE ATT&CK**: Alerts are categorized with MITRE ATT&CK techniques (T1046, T1110, T1071, T1498, etc.) for SOC visibility.
+**AegisGuard** là hệ thống **Phát hiện & Ngăn chặn Xâm nhập Mạng Cá nhân (Personal Network IDS/IPS)** đa nền tảng, gọn nhẹ và trực quan với bảng điều khiển giám sát an ninh thời gian thực phong cách Glassmorphism. Được thiết kế tối ưu riêng cho máy tính cá nhân (Windows, Linux, macOS), hệ thống mang lại khả năng phân tích gói tin tức thì, tùy biến luật phát hiện bằng YAML, tích hợp kho luật chính thức Emerging Threats (ET Open), tra cứu danh tiếng IP độc hại (Threat Intelligence) và tường lửa chủ động ngăn chặn kẻ tấn công.
 
 ---
 
-## 🏗️ Kiến Trúc Hệ Thống (System Architecture)
+## 🌟 Tính Năng Nổi Bật
 
-<div align="center">
-  <img src="docs/images/architecture_workflow.jpg" alt="AegisGuard Architecture & Workflow Infographic" width="100%" />
-  <p><em>Hình 1: Sơ đồ kiến trúc tổng quan & luồng xử lý phân tích bảo mật đa tầng của AegisGuard</em></p>
-</div>
+- **⚡ Cơ Chế Thu Thập Kép (Dual-Engine Ingestion):**
+  - **Engine A (Không cần Driver / Không cần quyền Admin):** Giám sát kết nối mạng ứng dụng và duyệt web HTTP/HTTPS bằng thư viện `psutil`, vận hành mượt mà, tiện lợi cho mọi người dùng.
+  - **Engine B (Bộ Bắt Gói Tầng Nhân):** Phân tích sâu từng gói tin mạng thô ở tầng kernel qua `Scapy` + `Npcap/libpcap` khi chạy với quyền Administrator.
+- **📏 Động Cơ Phân Tích Chữ Ký Linh Hoạt:** Định nghĩa chính sách phát hiện bằng cú pháp YAML dễ đọc, kết hợp thuật toán cửa sổ trượt (Sliding-Window) đánh giá tần suất theo thời gian thực (phát hiện Port Scan, Brute Force SSH/RDP, DoS Flood, C2 Tor/Metasploit, DNS Tunneling).
+- **📥 Kho Luật Trực Tuyến Emerging Threats (ET Open):** Kết nối trực tiếp tới máy chủ `rules.emergingthreats.net` (hơn 50.000 rules) để tải và chuyển đổi các danh mục tấn công (Reconnaissance, DoS, CVE Exploits, Web Shell, Malware) chỉ với 1 cú nhấp chuột.
+- **📝 Hệ Thống Lưu Trữ Phân Tầng Chuẩn Hóa SIEM:**
+  - **SQLite Database (`ids_storage.db`):** Lưu trữ cục bộ tốc độ cao phục vụ truy vấn dữ liệu thời gian thực trên Dashboard.
+  - **Suricata EVE JSON (`logs/eve.json`):** Định dạng chuẩn công nghiệp tương thích trực tiếp với **Wazuh, Splunk, Filebeat, ELK Stack**.
+  - **Snort Fast Log (`logs/fast.log`):** Định dạng văn bản 1 dòng ngắn gọn, hỗ trợ mở xem tức thì qua Notepad hoặc lệnh `tail` trong Terminal.
+- **🎨 Bảng Điều Khiển An Ninh Trực Quan (Glassmorphic Dashboard):** Được đóng gói sẵn tĩnh (Pre-built) và phân phối trực tiếp bởi FastAPI. Không yêu cầu người dùng phải cài đặt Node.js hay npm!
+- **🌐 Giao Diện Song Ngữ (Tiếng Việt & Tiếng Anh):** Chuyển đổi ngôn ngữ linh hoạt chỉ với một cú nhấp và tự động ghi nhớ cấu hình.
+- **🔍 Tích Hợp Threat Intelligence:** Tự động tra cứu độ uy tín và điểm rủi ro của IP (AbuseIPDB Score, Feodo Botnet C2, Quốc gia, ISP).
+- **🚫 Tường Lửa Ngăn Chặn Chủ Động (Active IPS):** Chặn IP độc hại tự động theo cấu hình rule hoặc can thiệp chặn thủ công chỉ bằng 1 nút bấm (`netsh advfirewall`).
+- **🛡️ Ánh Xạ Chiến Thuật MITRE ATT&CK:** Mọi cảnh báo đều được gắn thẻ kỹ thuật theo khung MITRE ATT&CK chuẩn quốc tế (`T1046`, `T1110`, `T1071`, `T1498`...).
+
+---
+
+## 🏗️ Kiến Trúc Hệ Thống
 
 AegisGuard được thiết kế theo mô hình **Đa tầng (Multi-tier Architecture)** với cơ chế **Dual-Engine Ingestion**, tách biệt rõ ràng giữa tầng thu thập mạng, tầng phân tích chữ ký, tầng lưu trữ chuẩn SIEM và giao diện điều khiển.
 
@@ -93,37 +88,37 @@ flowchart TD
 
 ---
 
-### 🗺️ Bản Đồ Quan Hệ Module (CodeBoarding Component Dependency Map)
+### 🗺️ Bản Đồ Quan Hệ Giữa Các Module (Chuẩn CodeBoarding)
 
-Kiến trúc các module được phân rã và chuẩn hóa theo tiêu chuẩn **[CodeBoarding](https://github.com/CodeBoarding/CodeBoarding)** (Static Code Analysis & Architectural Dependency Extraction). Tệp phân tích kiến trúc đã được tạo tại [`.codeboarding/analysis.json`](.codeboarding/analysis.json):
+Kiến trúc các module được phân rã và chuẩn hóa theo tiêu chuẩn **[CodeBoarding](https://github.com/CodeBoarding/CodeBoarding)** (Phân tích mã nguồn tĩnh & Trích xuất quan hệ phụ thuộc kiến trúc). Tệp đặc tả cấu trúc đã được lưu tại [`.codeboarding/analysis.json`](.codeboarding/analysis.json):
 
 ```mermaid
 graph LR
-    Adversary_Simulator["Adversary Attack Simulator\n(test_attacks.py)"]
-    Dual_Ingestion["Dual Ingestion Engine\n(engine/capture.py)"]
-    Rule_Detector["Rule & Detection Engine\n(engine/detector.py)"]
-    Suricata_Importer["Suricata & ET Open Importer\n(engine/suricata_importer.py)"]
-    Persistence_Layer["Persistence & SIEM Streaming\n(engine/db.py)"]
-    Firewall_IPS["Firewall IPS & Threat Intel\n(engine/main.py, engine/db.py)"]
-    FastAPI_Core["FastAPI Gateway & Runtime Core\n(engine/main.py, run.py)"]
-    SOC_Dashboard["Glassmorphic SOC Dashboard\n(dashboard/src/)"]
+    Adversary_Simulator["Bộ Giả Lập Tấn Công\n(test_attacks.py)"]
+    Dual_Ingestion["Bộ Thu Thập Kép (Dual Engine)\n(engine/capture.py)"]
+    Rule_Detector["Động Cơ Phân Tích & Đối Soát Luật\n(engine/detector.py)"]
+    Suricata_Importer["Bộ Nạp Luật Suricata & ET Open\n(engine/suricata_importer.py)"]
+    Persistence_Layer["Tầng Lưu Trữ & Stream SIEM\n(engine/db.py)"]
+    Firewall_IPS["Tường Lửa IPS & Threat Intel\n(engine/main.py, engine/db.py)"]
+    FastAPI_Core["Cổng API FastAPI & Máy Chủ Web\n(engine/main.py, run.py)"]
+    SOC_Dashboard["Bảng Điều Khiển An Ninh Dashboard\n(dashboard/src/)"]
 
-    Adversary_Simulator -- "injects simulated network attack vectors" --> Dual_Ingestion
-    Dual_Ingestion -- "dispatches normalized packet events & connection tuples" --> Rule_Detector
-    Suricata_Importer -- "generates YAML signatures & triggers engine reload" --> Rule_Detector
-    Rule_Detector -- "records packet metadata, alerts, and EVE streams" --> Persistence_Layer
-    Rule_Detector -- "triggers automated IP block on critical alert" --> Firewall_IPS
-    Firewall_IPS -- "persists active blocked IP registry" --> Persistence_Layer
-    FastAPI_Core -- "queries stats, recent alerts, and packet logs" --> Persistence_Layer
-    FastAPI_Core -- "executes rule toggle, bulk actions, and custom saves" --> Rule_Detector
-    FastAPI_Core -- "requests category downloads from rules.emergingthreats.net" --> Suricata_Importer
-    FastAPI_Core -- "invokes netsh firewall commands & Threat Intel checks" --> Firewall_IPS
-    SOC_Dashboard -- "polls REST endpoints for real-time state synchronization" --> FastAPI_Core
+    Adversary_Simulator -- "Bắn lưu lượng tấn công mô phỏng" --> Dual_Ingestion
+    Dual_Ingestion -- "Chuyển tiếp sự kiện mạng & bộ socket" --> Rule_Detector
+    Suricata_Importer -- "Tạo chữ ký YAML & nạp lại luật" --> Rule_Detector
+    Rule_Detector -- "Ghi nhận metadata, cảnh báo & stream EVE" --> Persistence_Layer
+    Rule_Detector -- "Kích hoạt lệnh chặn khi có cảnh báo Critical" --> Firewall_IPS
+    Firewall_IPS -- "Lưu trữ danh sách IP bị chặn vào SQLite" --> Persistence_Layer
+    FastAPI_Core -- "Truy vấn thống kê, cảnh báo & log gói tin" --> Persistence_Layer
+    FastAPI_Core -- "Thực thi bật/tắt luật & lưu luật tùy chỉnh" --> Rule_Detector
+    FastAPI_Core -- "Yêu cầu tải danh mục từ rules.emergingthreats.net" --> Suricata_Importer
+    FastAPI_Core -- "Gọi lệnh chặn netsh & kiểm tra Threat Intel" --> Firewall_IPS
+    SOC_Dashboard -- "Đồng bộ hóa dữ liệu thời gian thực" --> FastAPI_Core
 ```
 
 ---
 
-## 🔄 Luồng Hoạt Động Tuần Tự (Operational Workflow)
+## 🔄 Luồng Hoạt Động Tuần Tự Của Hệ Thống
 
 Dưới đây là chu trình xử lý tuần tự từ lúc một gói tin hoặc luồng tấn công chạm vào máy tính cho đến khi hệ thống phân tích, lưu log chuẩn SIEM và chủ động thực thi chặn (IPS):
 
@@ -180,12 +175,12 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Hướng Dẫn Cài Đặt & Build (Build & Setup Guide)
+## 🛠️ Hướng Dẫn Cài Đặt & Khởi Chạy
 
-Hệ thống hỗ trợ 2 chế độ triển khai: **Chạy ngay lập tức (Không cần Node.js)** hoặc **Tự build từ Source Code (Dành cho Developer)**.
+Hệ thống hỗ trợ 2 chế độ triển khai: **Chạy ngay lập tức (Không cần cài đặt Node.js)** hoặc **Tự build từ Mã Nguồn (Dành cho Lập trình viên)**.
 
 ### Cách 1: Chạy ngay không cần Node.js (Khuyên dùng)
-Giao diện React Dashboard đã được build sẵn thành các static assets tối ưu trong thư mục `dashboard/dist/`. FastAPI sẽ tự động mount và phân phối bundle này.
+Giao diện React Dashboard đã được đóng gói sẵn thành các tệp tĩnh tối ưu trong thư mục `dashboard/dist/`. FastAPI sẽ tự động mount và phân phối bundle này.
 
 ```bash
 # 1. Clone repository
@@ -204,7 +199,7 @@ python run.py
 
 ---
 
-### Cách 2: Tự Build Frontend từ Source Code (Developer Mode)
+### Cách 2: Tự Build Frontend từ Mã Nguồn (Dành cho Lập trình viên)
 Nếu bạn muốn chỉnh sửa giao diện React hoặc thêm component mới:
 
 ```bash
@@ -343,7 +338,7 @@ Get-Content logs/fast.log -Wait -Tail 20
 
 ---
 
-## 🧪 Quick Attack Testing (Demo trong 5s)
+## 🧪 Thử Nghiệm Kịch Bản Tấn Công (Demo trong 5 giây)
 
 Để kiểm chứng khả năng phát hiện của IDS/IPS và xem các biểu đồ trên Dashboard phản hồi tức thì, mở một terminal thứ 2 và chạy:
 
@@ -357,17 +352,17 @@ python test_attacks.py
 
 ---
 
-## 💡 Engineering Design Rationale (Why Signature + Threat Intel vs Flow ML)
+## 💡 Cơ Sở Thiết Kế Kỹ Thuật (Tại sao chọn Signature + Threat Intel thay vì Flow ML)
 
 Nhiều nghiên cứu học thuật về IDS thường sử dụng các bộ dữ liệu như **CICIDS2017** và phụ thuộc vào công cụ trích xuất **CICFlowMeter** (tính toán hơn 80 thuộc tính thống kê 2 chiều sau khi một luồng mạng đã kết thúc).
 
 Trong môi trường triển khai thực tế trên máy tính cá nhân, việc chờ đợi kết thúc luồng (flow completion) gây ra độ trễ phát hiện rất lớn và tiêu tốn nhiều RAM/CPU. **AegisGuard** giải quyết triệt để vấn đề này bằng cách kết hợp:
-1. **Phân tích theo gói tin và cửa sổ trượt thời gian thực (Sliding-window statistics)**: Phát hiện ngay khi tần suất vượt ngưỡng mà không cần đợi flow kết thúc.
+1. **Phân tích theo gói tin và cửa sổ trượt thời gian thực (Sliding-window statistics)**: Phát hiện ngay khi tần suất vượt ngưỡng mà không cần đợi luồng kết thúc.
 2. **Bộ chữ ký luật (Rule Signatures)**: Tương thích Suricata & ET Open giúp phát hiện chính xác với độ trễ gần bằng 0.
 3. **Cơ chế Threat Intelligence Feeds**: Kiểm tra danh tiếng IP độc hại (AbuseIPDB/Feodo) ngay tại thời điểm kết nối.
 
 ---
 
-## 📜 License
+## 📜 Giấy Phép (License)
 
-Phát hành dưới giấy phép [MIT License](LICENSE).
+Phát hành dưới giấy phép mã nguồn mở [MIT License](LICENSE).
