@@ -1,0 +1,19 @@
+id: suricata-2010992
+name: ET POLICY Database Service External Exposure Connection
+description: 'Imported from Suricata/ET Open rule (SID: 2010992, Classtype: policy-violation)'
+severity: medium
+category: credential_access
+enabled: true
+condition:
+  type: port_match
+  ports:
+  - 3306
+  - 5432
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1110
+tags:
+- suricata_imported
+- credential_access
+- sid_2010992

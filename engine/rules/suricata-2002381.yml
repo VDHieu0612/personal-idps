@@ -1,0 +1,20 @@
+id: suricata-2002381
+name: ET SCAN Potential FTP Brute Force Probe
+description: 'Imported from Suricata/ET Open rule (SID: 2002381, Classtype: attempted-recon)'
+severity: high
+category: reconnaissance
+enabled: true
+condition:
+  type: single_target_rate
+  target_port: 21
+  threshold_count: 5
+  window_seconds: 20
+  group_by: src_ip
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1046
+tags:
+- suricata_imported
+- reconnaissance
+- sid_2002381

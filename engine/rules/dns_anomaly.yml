@@ -1,0 +1,20 @@
+id: rule-006
+name: DNS Tunneling / Exfiltration Suspect
+description: Flags abnormally long DNS domain queries or unusually high DNS request rates.
+severity: medium
+category: exfiltration
+enabled: true
+
+condition:
+  type: dns_length
+  max_query_length: 60
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1071.004
+tags:
+  - dns
+  - tunneling
+  - exfiltration

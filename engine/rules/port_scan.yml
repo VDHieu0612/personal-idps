@@ -1,0 +1,22 @@
+id: rule-001
+name: Port Scan Detection
+description: Detects multiple distinct destination ports probed from a single source IP within a short window.
+severity: high
+category: reconnaissance
+enabled: true
+
+condition:
+  type: threshold
+  field: dst_port
+  threshold_count: 15
+  window_seconds: 10
+  group_by: src_ip
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1046
+tags:
+  - scan
+  - recon

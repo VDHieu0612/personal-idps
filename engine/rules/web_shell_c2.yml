@@ -1,0 +1,24 @@
+id: rule-009
+name: Web Shell / Reverse HTTP Callback
+description: Detects outbound Web Shell or reverse proxy connections originating from local web application processes.
+severity: critical
+category: web_security
+enabled: true
+
+condition:
+  type: port_match
+  ports:
+    - 8888
+    - 8008
+    - 8081
+    - 1337
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1505.003
+tags:
+  - webshell
+  - rce
+  - backdoor

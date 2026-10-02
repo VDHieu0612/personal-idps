@@ -1,0 +1,20 @@
+id: suricata-2017918
+name: ET DOS Possible NTP DDoS Inbound Frequent Un-Authed MON_LIST Requests IMPL 0x02
+description: 'Imported from Suricata/ET Open rule (SID: 2017918, Classtype: attempted-dos)'
+severity: medium
+category: denial_of_service
+enabled: true
+condition:
+  type: single_target_rate
+  target_port: 123
+  threshold_count: 2
+  window_seconds: 60
+  group_by: src_ip
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1498
+tags:
+- suricata_imported
+- denial_of_service
+- sid_2017918

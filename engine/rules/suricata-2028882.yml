@@ -1,0 +1,19 @@
+id: suricata-2028882
+name: ET TROJAN Cobalt Strike Beacon Default Port Communication
+description: 'Imported from Suricata/ET Open rule (SID: 2028882, Classtype: trojan-activity)'
+severity: critical
+category: command_and_control
+enabled: true
+condition:
+  type: port_match
+  ports:
+  - 50050
+  - 50051
+action:
+  alert: true
+  block_ip: true
+mitre_attack: T1071
+tags:
+- suricata_imported
+- command_and_control
+- sid_2028882

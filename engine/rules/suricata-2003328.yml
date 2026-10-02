@@ -1,0 +1,19 @@
+id: suricata-2003328
+name: ET TROJAN Metasploit Default Handler Outbound Callback
+description: 'Imported from Suricata/ET Open rule (SID: 2003328, Classtype: trojan-activity)'
+severity: critical
+category: command_and_control
+enabled: true
+condition:
+  type: port_match
+  ports:
+  - 4444
+  - 5555
+action:
+  alert: true
+  block_ip: true
+mitre_attack: T1071
+tags:
+- suricata_imported
+- command_and_control
+- sid_2003328

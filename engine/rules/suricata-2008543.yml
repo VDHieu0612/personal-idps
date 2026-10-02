@@ -1,0 +1,20 @@
+id: suricata-2008543
+name: ET SCAN Potential RDP Scan / Brute Force
+description: 'Imported from Suricata/ET Open rule (SID: 2008543, Classtype: attempted-recon)'
+severity: high
+category: reconnaissance
+enabled: true
+condition:
+  type: single_target_rate
+  target_port: 3389
+  threshold_count: 5
+  window_seconds: 15
+  group_by: src_ip
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1046
+tags:
+- suricata_imported
+- reconnaissance
+- sid_2008543

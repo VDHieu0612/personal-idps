@@ -1,0 +1,21 @@
+id: suricata-2017920
+name: ET DOS Possible NTP DDoS Multiple MON_LIST Seq 0 Response Spanning Multiple
+  Packets IMPL 0x02
+description: 'Imported from Suricata/ET Open rule (SID: 2017920, Classtype: attempted-dos)'
+severity: medium
+category: denial_of_service
+enabled: true
+condition:
+  type: threshold
+  field: dst_port
+  threshold_count: 2
+  window_seconds: 60
+  group_by: src_ip
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1498
+tags:
+- suricata_imported
+- denial_of_service
+- sid_2017920

@@ -1,0 +1,141 @@
+{
+  "metadata": {
+    "generated_at": "2026-10-02T22:45:00.000000+00:00",
+    "repo_name": "AegisGuard Personal IDS/IPS",
+    "analyzer": "CodeBoarding Static Analysis & Architectural Mapper",
+    "version": "1.0.0"
+  },
+  "components": [
+    {
+      "id": "Dual_Ingestion_Engine",
+      "name": "Dual Ingestion Engine",
+      "description": "Cross-platform network packet and active socket capturing. Includes Engine A (zero-driver psutil connection inspector) and Engine B (Scapy deep kernel packet sniffer).",
+      "source_files": [
+        "engine/capture.py"
+      ]
+    },
+    {
+      "id": "Rule_and_Detection_Engine",
+      "name": "Rule & Detection Engine",
+      "description": "Evaluates network events against sliding-window buffers, thresholds, and YAML signatures. Classifies threats and tags MITRE ATT&CK techniques.",
+      "source_files": [
+        "engine/detector.py",
+        "engine/rules/*.yml"
+      ]
+    },
+    {
+      "id": "Suricata_ET_Open_Importer",
+      "name": "Suricata & ET Open Importer",
+      "description": "Streams category rulesets from rules.emergingthreats.net (50,000+ rules), parses Suricata/Snort syntax, and converts signatures into native YAML.",
+      "source_files": [
+        "engine/suricata_importer.py"
+      ]
+    },
+    {
+      "id": "Persistence_and_SIEM_Streaming",
+      "name": "Persistence & SIEM Streaming Layer",
+      "description": "Multi-tier storage. Stores real-time metrics in SQLite (ids_storage.db), streams Suricata EVE JSON (logs/eve.json) for Wazuh/Splunk, and writes Snort Fast Log (logs/fast.log).",
+      "source_files": [
+        "engine/db.py"
+      ]
+    },
+    {
+      "id": "Firewall_IPS_and_Threat_Intel",
+      "name": "Firewall IPS & Threat Intelligence",
+      "description": "Active IPS enforcement via OS firewall (netsh advfirewall), blacklist management, and external threat reputation lookups (AbuseIPDB/Feodo).",
+      "source_files": [
+        "engine/main.py",
+        "engine/db.py"
+      ]
+    },
+    {
+      "id": "FastAPI_Gateway_Runtime",
+      "name": "FastAPI Gateway & Runtime Core",
+      "description": "REST API gateway, background capture orchestrator, CORS handler, and static SPA web server for the dashboard.",
+      "source_files": [
+        "engine/main.py",
+        "run.py"
+      ]
+    },
+    {
+      "id": "Glassmorphic_SOC_Dashboard",
+      "name": "Glassmorphic SOC Dashboard",
+      "description": "Bilingual (VI/EN) single-page application built with React, Vite, and Tailwind CSS. Provides real-time threat radar, rule management, and manual IP blocking.",
+      "source_files": [
+        "dashboard/src/App.tsx",
+        "dashboard/src/pages/DashboardPage.tsx",
+        "dashboard/src/pages/PacketsPage.tsx",
+        "dashboard/src/pages/RulesPage.tsx",
+        "dashboard/src/pages/BlockedPage.tsx",
+        "dashboard/src/components/ThreatModal.tsx",
+        "dashboard/src/api.ts",
+        "dashboard/src/i18n.ts"
+      ]
+    },
+    {
+      "id": "Adversary_Attack_Simulator",
+      "name": "Adversary Attack Simulator",
+      "description": "Automated attack simulation suite generating port scans, SSH/RDP brute force, DoS floods, and DNS exfiltration for instant verification.",
+      "source_files": [
+        "test_attacks.py"
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "source": "Dual_Ingestion_Engine",
+      "target": "Rule_and_Detection_Engine",
+      "label": "dispatches normalized packet events & connection tuples"
+    },
+    {
+      "source": "Suricata_ET_Open_Importer",
+      "target": "Rule_and_Detection_Engine",
+      "label": "generates YAML signatures & triggers engine rule reload"
+    },
+    {
+      "source": "Rule_and_Detection_Engine",
+      "target": "Persistence_and_SIEM_Streaming",
+      "label": "records packet metadata, alerts, and EVE JSON streams"
+    },
+    {
+      "source": "Rule_and_Detection_Engine",
+      "target": "Firewall_IPS_and_Threat_Intel",
+      "label": "triggers automated IP block on critical alert"
+    },
+    {
+      "source": "Firewall_IPS_and_Threat_Intel",
+      "target": "Persistence_and_SIEM_Streaming",
+      "label": "persists active blocked IP registry in SQLite"
+    },
+    {
+      "source": "FastAPI_Gateway_Runtime",
+      "target": "Persistence_and_SIEM_Streaming",
+      "label": "queries stats, recent alerts, and packet logs"
+    },
+    {
+      "source": "FastAPI_Gateway_Runtime",
+      "target": "Rule_and_Detection_Engine",
+      "label": "executes rule toggle, bulk enable/disable, and custom rule save"
+    },
+    {
+      "source": "FastAPI_Gateway_Runtime",
+      "target": "Suricata_ET_Open_Importer",
+      "label": "requests category downloads from rules.emergingthreats.net"
+    },
+    {
+      "source": "FastAPI_Gateway_Runtime",
+      "target": "Firewall_IPS_and_Threat_Intel",
+      "label": "invokes netsh firewall commands & Threat Intel reputation checks"
+    },
+    {
+      "source": "Glassmorphic_SOC_Dashboard",
+      "target": "FastAPI_Gateway_Runtime",
+      "label": "polls REST endpoints (:8000) for real-time state synchronization"
+    },
+    {
+      "source": "Adversary_Attack_Simulator",
+      "target": "Dual_Ingestion_Engine",
+      "label": "injects simulated network attack vectors into host sockets"
+    }
+  ]
+}

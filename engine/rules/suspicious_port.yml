@@ -1,0 +1,24 @@
+id: rule-005
+name: Suspicious Service Port Connection
+description: Flags outbound or inbound connections using known Tor, IRC, or C2 ports (e.g. 9001, 9030, 6667).
+severity: high
+category: command_and_control
+enabled: true
+
+condition:
+  type: port_match
+  ports:
+    - 9001
+    - 9030
+    - 6667
+    - 4444
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1090
+tags:
+  - tor
+  - c2
+  - proxy

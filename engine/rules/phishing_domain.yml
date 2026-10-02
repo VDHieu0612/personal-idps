@@ -1,0 +1,18 @@
+id: rule-008
+name: Phishing & Suspicious Web Domain Alert
+description: Flags outbound HTTP/HTTPS requests targeting domains with known phishing
+  keywords (e.g. login-verify, secure-update, account-bank).
+severity: high
+category: web_phishing
+enabled: true
+condition:
+  type: dns_length
+  max_query_length: 30
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1566.002
+tags:
+- phishing
+- web
+- credential_harvesting

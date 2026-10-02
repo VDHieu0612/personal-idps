@@ -1,0 +1,20 @@
+id: suricata-2018933
+name: ET WEB_SPECIFIC_APPS Potential Web Shell Execution Probe
+description: 'Imported from Suricata/ET Open rule (SID: 2018933, Classtype: web-application-attack)'
+severity: critical
+category: web_security
+enabled: true
+condition:
+  type: port_match
+  ports:
+  - 80
+  - 8080
+  - 8888
+action:
+  alert: true
+  block_ip: true
+mitre_attack: T1505.003
+tags:
+- suricata_imported
+- web_security
+- sid_2018933

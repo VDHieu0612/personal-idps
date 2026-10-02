@@ -1,0 +1,21 @@
+id: suricata-2017965
+name: ET DOS Likely NTP DDoS In Progress MON_LIST Response to Non-Ephemeral Port IMPL
+  0x02
+description: 'Imported from Suricata/ET Open rule (SID: 2017965, Classtype: attempted-dos)'
+severity: medium
+category: denial_of_service
+enabled: true
+condition:
+  type: threshold
+  field: dst_port
+  threshold_count: 1
+  window_seconds: 120
+  group_by: src_ip
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1498
+tags:
+- suricata_imported
+- denial_of_service
+- sid_2017965

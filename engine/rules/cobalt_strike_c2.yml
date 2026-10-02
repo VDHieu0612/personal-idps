@@ -1,0 +1,22 @@
+id: rule-014
+name: Cobalt Strike Beaconing & C2 Traffic
+description: Detects default Cobalt Strike team server communication ports (e.g. 50050, 50051).
+severity: critical
+category: command_and_control
+enabled: true
+
+condition:
+  type: port_match
+  ports:
+    - 50050
+    - 50051
+
+action:
+  alert: true
+  block_ip: true
+
+mitre_attack: T1071
+tags:
+  - cobalt_strike
+  - c2
+  - red_team

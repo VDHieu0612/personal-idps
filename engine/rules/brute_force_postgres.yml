@@ -1,0 +1,22 @@
+id: rule-013
+name: PostgreSQL Database Auth Probe
+description: Flags rapid connection attempts targeting PostgreSQL Port 5432.
+severity: high
+category: credential_access
+enabled: true
+
+condition:
+  type: single_target_rate
+  target_port: 5432
+  threshold_count: 5
+  window_seconds: 5
+  group_by: src_ip
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1110
+tags:
+  - postgresql
+  - database

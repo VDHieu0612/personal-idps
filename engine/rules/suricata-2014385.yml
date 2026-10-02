@@ -1,0 +1,20 @@
+id: suricata-2014385
+name: ET DOS Microsoft Remote Desktop (RDP) Syn/Ack Outbound Flowbit Set
+description: 'Imported from Suricata/ET Open rule (SID: 2014385, Classtype: not-suspicious)'
+severity: medium
+category: general
+enabled: true
+condition:
+  type: threshold
+  field: dst_port
+  threshold_count: 10
+  window_seconds: 10
+  group_by: src_ip
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1046
+tags:
+- suricata_imported
+- general
+- sid_2014385

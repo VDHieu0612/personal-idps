@@ -1,0 +1,20 @@
+id: suricata-2001219
+name: ET SCAN Potential SSH Brute Force Attempt
+description: 'Imported from Suricata/ET Open rule (SID: 2001219, Classtype: attempted-recon)'
+severity: high
+category: reconnaissance
+enabled: true
+condition:
+  type: single_target_rate
+  target_port: 22
+  threshold_count: 5
+  window_seconds: 30
+  group_by: src_ip
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1046
+tags:
+- suricata_imported
+- reconnaissance
+- sid_2001219

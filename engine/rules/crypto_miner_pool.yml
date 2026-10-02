@@ -1,0 +1,23 @@
+id: rule-016
+name: Unauthorized Crypto Mining Pool Connection
+description: Detects outbound traffic targeting Stratum / Monero mining pool ports (3333, 4444, 7777, 14444).
+severity: high
+category: malware
+enabled: true
+
+condition:
+  type: port_match
+  ports:
+    - 3333
+    - 7777
+    - 14444
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1496
+tags:
+  - cryptomining
+  - malware
+  - resource_hijacking

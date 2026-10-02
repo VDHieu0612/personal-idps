@@ -1,0 +1,23 @@
+id: rule-003
+name: RDP Brute Force Attempt
+description: Detects multiple connection attempts targeting Windows Remote Desktop (Port 3389).
+severity: critical
+category: credential_access
+enabled: true
+
+condition:
+  type: single_target_rate
+  target_port: 3389
+  threshold_count: 5
+  window_seconds: 5
+  group_by: src_ip
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1110.001
+tags:
+  - rdp
+  - brute_force
+  - windows

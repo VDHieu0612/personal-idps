@@ -1,0 +1,22 @@
+id: rule-002
+name: SSH Brute Force Detection
+description: Detects rapid repeated SYN connections targeting SSH port 22.
+severity: high
+category: credential_access
+enabled: true
+
+condition:
+  type: single_target_rate
+  target_port: 22
+  threshold_count: 5
+  window_seconds: 5
+  group_by: src_ip
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1110
+tags:
+  - ssh
+  - brute_force

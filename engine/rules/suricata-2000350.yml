@@ -1,0 +1,20 @@
+id: suricata-2000350
+name: ET DOS Potential ICMP Ping Flooding
+description: 'Imported from Suricata/ET Open rule (SID: 2000350, Classtype: denial-of-service)'
+severity: medium
+category: denial_of_service
+enabled: true
+condition:
+  type: threshold
+  field: dst_port
+  threshold_count: 50
+  window_seconds: 5
+  group_by: src_ip
+action:
+  alert: true
+  block_ip: false
+mitre_attack: T1498
+tags:
+- suricata_imported
+- denial_of_service
+- sid_2000350

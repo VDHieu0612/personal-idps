@@ -1,0 +1,19 @@
+id: rule-007
+name: Oversized Packet Payload
+description: Detects single packet sizes exceeding normal MTU thresholds (>8192 bytes).
+severity: low
+category: anomaly
+enabled: true
+
+condition:
+  type: packet_size
+  max_bytes: 8192
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1499
+tags:
+  - anomaly
+  - mtu

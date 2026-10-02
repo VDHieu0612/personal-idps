@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  aegisguard-ids:
+    build: .
+    container_name: aegisguard_ids_engine
+    network_mode: "host" # Required for packet sniffing on Linux/Mac
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - ./ids_storage.db:/app/ids_storage.db
+      - ./engine/rules:/app/engine/rules

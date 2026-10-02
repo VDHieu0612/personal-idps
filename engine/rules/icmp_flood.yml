@@ -1,0 +1,23 @@
+id: rule-004
+name: ICMP Flood Attack
+description: High volume of ICMP echo request packets originating from a single host.
+severity: medium
+category: denial_of_service
+enabled: true
+
+condition:
+  type: protocol_rate
+  protocol: ICMP
+  threshold_count: 50
+  window_seconds: 5
+  group_by: src_ip
+
+action:
+  alert: true
+  block_ip: false
+
+mitre_attack: T1498
+tags:
+  - icmp
+  - flood
+  - dos
